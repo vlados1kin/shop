@@ -8,6 +8,8 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)
     {
+        builder.ToTable("AspNetUsers");
+        
         builder.Property(u => u.Name).IsRequired();
     }
 }
