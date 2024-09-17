@@ -1,0 +1,29 @@
+﻿services:
+  user:
+    image: user
+    build:
+      context: .
+      dockerfile: User/Dockerfile
+      args:
+        BUILD_CONFIGURATION: Release
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+
+  product:
+    image: product
+    build:
+      context: .
+      dockerfile: Product/Dockerfile
+      args:
+        BUILD_CONFIGURATION: Release
+    ports:
+      - "8082:8082"
+      - "8083:8083"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+  
+  mssql-server:
+    image: mcr.microsoft.com/mssql/server:2022-latest
