@@ -11,6 +11,6 @@ public static class ProductRepositoryExtensions
         if (string.IsNullOrWhiteSpace(searchTerm))
             return products;
         var lowerCaseTerm = searchTerm.Trim().ToLower();
-        return products.Where(p => p.Name.Contains(lowerCaseTerm, StringComparison.CurrentCultureIgnoreCase));
+        return products.Where(p => p.Name.ToLower().Contains(lowerCaseTerm));
     }
 }
