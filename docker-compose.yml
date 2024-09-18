@@ -11,7 +11,7 @@
       - "8081:8081"
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
-      - ConnectionStrings__sqlConnection=Server=mssql_container,1433;Database=User;User Id=sa;Password=password;Integrated Security=true;TrustServerCertificate=True;Trusted_Connection=False;
+      - ConnectionStrings__sqlConnection=Server=mssql_container,1433;Database=Shop;User Id=SA;Password=SuperPassword123;TrustServerCertificate=True;Trusted_Connection=False;
     depends_on:
       - mssql
     networks:
@@ -29,7 +29,7 @@
       - "8083:8083"
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
-      - ConnectionStrings__DefaultConnection=Server=mssql_container,1433;Database=User;User Id=sa;Password=password;Integrated Security=true;TrustServerCertificate=True;Trusted_Connection=False;
+      - ConnectionStrings__sqlConnection=Server=mssql_container,1433;Database=Shop;User Id=SA;Password=SuperPassword123;TrustServerCertificate=True;Trusted_Connection=False;
     depends_on:
       - mssql
     networks:
@@ -40,7 +40,7 @@
     container_name: mssql_container
     environment:
       - ACCEPT_EULA=Y
-      - SA_PASSWORD=password
+      - SA_PASSWORD=SuperPassword123
       - MSSQL_PID=Express
     ports:
       - "1433:1433"
