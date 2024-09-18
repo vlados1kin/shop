@@ -15,8 +15,9 @@ public class ProductRepository : RepositoryBase<Entities.Models.Product>, IProdu
         bool trackChanges)
     {
         var products = await FindByCondition(
-                a => a.UserId == id && a.Price <= productParameters.MaxPrice && a.Price >= productParameters.MinPrice,
-                trackChanges)
+                a => a.UserId == id, trackChanges)
+            .Filter(productParameters.MinPrice, productParameters.MaxPrice)
+            .Search(productParameters.Search)
             .ToListAsync();
         return PagedList<Entities.Models.Product>.ToPagedList(products, productParameters.PageNumber,
             productParameters.PageSize);
