@@ -14,7 +14,10 @@ public class ProductRepository : RepositoryBase<Entities.Models.Product>, IProdu
     public async Task<PagedList<Entities.Models.Product>> GetProductsAsync(Guid id, ProductParameters productParameters,
         bool trackChanges)
     {
-        var products = await FindByCondition(a => a.UserId == id, trackChanges).ToListAsync();
+        var products = await FindByCondition(
+                a => a.UserId == id && a.Price <= productParameters.MaxPrice && a.Price >= productParameters.MinPrice,
+                trackChanges)
+            .ToListAsync();
         return PagedList<Entities.Models.Product>.ToPagedList(products, productParameters.PageNumber,
             productParameters.PageSize);
     }

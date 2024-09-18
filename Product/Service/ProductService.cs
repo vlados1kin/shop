@@ -19,6 +19,8 @@ public class ProductService : IProductService
     
     public async Task<(IEnumerable<ProductDto> users, MetaData metaData)> GetProductsAsync(Guid id, ProductParameters productParameters, bool trackChanges)
     {
+        if (!productParameters.ValidPrice)
+            throw new ValidPriceBadRequestException();
         var usersWithMetaData = await _repository.Product.GetProductsAsync(id, productParameters, trackChanges);
         var usersDto = _mapper.Map<IEnumerable<ProductDto>>(usersWithMetaData);
         return (users: usersDto, metaData: usersWithMetaData.MetaData);
