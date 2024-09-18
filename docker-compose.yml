@@ -11,6 +11,11 @@
       - "8081:8081"
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__sqlConnection=Server=mssql_container,1433;Database=User;User Id=sa;Password=password;Integrated Security=true;TrustServerCertificate=True;Trusted_Connection=False;
+    depends_on:
+      - mssql
+    networks:
+      - app_network
 
   product:
     image: product
@@ -24,6 +29,24 @@
       - "8083:8083"
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__DefaultConnection=Server=mssql_container,1433;Database=User;User Id=sa;Password=password;Integrated Security=true;TrustServerCertificate=True;Trusted_Connection=False;
+    depends_on:
+      - mssql
+    networks:
+      - app_network
   
-  mssql-server:
+  mssql:
     image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: mssql_container
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=password
+      - MSSQL_PID=Express
+    ports:
+      - "1433:1433"
+    networks:
+      - app_network
+    
+networks:
+  app_network:
+    driver: bridge
