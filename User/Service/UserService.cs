@@ -149,10 +149,15 @@ public class UserService : IUserService
     {
         var claims = new List<Claim>
         {
-            new(ClaimTypes.Name, _user.UserName)
+            new(ClaimTypes.Name, _user.UserName),
+            
         };
         var roles = await _userManager.GetRolesAsync(_user);
-        claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
+        foreach (var role in roles)
+        {
+            claims.Add(new Claim(ClaimTypes.Role, role));
+        }
+        claims.Add(new(ClaimTypes.NameIdentifier, _user.Id.ToString()));
         return claims;
     }
 
